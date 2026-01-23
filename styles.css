@@ -1,342 +1,154 @@
-/* ============================================================
-   GLOBAL RESET + BASE
-   ============================================================ */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html, body {
-  width: 100%;
-  height: 100%;
-  overflow: hidden; /* 1920x1080 lock */
-  background: #000;
-  font-family: "TT Commons", "Segoe UI", sans-serif;
-  color: #f5f5f5;
-}
-
-/* ============================================================
-   ROOT VARIABLES — EMBER GLOW + GLASS SYSTEM
-   ============================================================ */
 :root {
-  --orange: #ff7a1a;
-  --orange-bright: #ff9d3c;
-  --orange-soft: rgba(255, 122, 26, 0.35);
-  --panel-bg: rgba(10, 10, 14, 0.45); /* medium smoke */
-  --panel-bg-heavy: rgba(10, 10, 14, 0.65);
-  --panel-bg-light: rgba(10, 10, 14, 0.25);
-  --border-thin: 1px solid rgba(255, 255, 255, 0.08);
-  --border-heavy: 2px solid rgba(255, 255, 255, 0.18);
-  --blur-light: blur(6px);
-  --blur-medium: blur(10px);
-  --blur-heavy: blur(14px);
+  --glass-bg: rgba(20, 20, 20, 0.55);
+  --border: rgba(255,255,255,0.08);
+  --ember: #ff7a18;
+  --text-main: #eaeaea;
 }
 
-/* ============================================================
-   BACKGROUND ROTATOR
-   ============================================================ */
-#helm-background-layer {
+* {
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont;
+}
+
+body {
+  margin: 0;
+  color: var(--text-main);
+  background: black;
+  overflow: hidden;
+}
+
+#background-overlay {
   position: fixed;
   inset: 0;
-  z-index: 0;
-  overflow: hidden;
+  background: linear-gradient(to bottom, rgba(0,0,0,.75), rgba(0,0,0,.9));
+  z-index: -1;
 }
 
-#helm-background-image {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  transition: opacity 1.2s ease;
-  opacity: 1;
-}
-
-#helm-background-overlay {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    circle at center,
-    rgba(0, 0, 0, 0.35),
-    rgba(0, 0, 0, 0.75)
-  );
-  backdrop-filter: blur(4px);
-}
-
-/* ============================================================
-   HEADER — EPPICLIFE EMBER GLOW
-   ============================================================ */
-#helm-header {
-  position: relative;
-  z-index: 10;
-  height: 70px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-bottom: var(--border-heavy);
-  background: rgba(0, 0, 0, 0.35);
-  backdrop-filter: var(--blur-light);
-}
-
-#helm-title {
-  font-size: 42px;
-  letter-spacing: 0.18em;
-  font-weight: 600;
-  color: var(--orange-bright);
-  text-shadow:
-    0 0 8px var(--orange),
-    0 0 16px var(--orange-soft),
-    0 0 28px rgba(255, 140, 40, 0.45);
-  animation: emberFlicker 2.8s infinite ease-in-out;
-}
-
-@keyframes emberFlicker {
-  0%, 100% { opacity: 1; text-shadow: 0 0 8px var(--orange); }
-  45% { opacity: 0.92; text-shadow: 0 0 14px var(--orange-bright); }
-  60% { opacity: 0.97; text-shadow: 0 0 20px var(--orange-soft); }
-}
-
-/* ============================================================
-   MAIN LAYOUT — 20 / 60 / 20 SPLIT
-   ============================================================ */
-#helm-main {
-  position: relative;
-  z-index: 5;
+/* GRID */
+.page-grid {
   display: grid;
-  grid-template-columns: 20% 60% 20%;
-  height: calc(100% - 70px - 80px); /* header + footer */
-  width: 100%;
+  grid-template-columns: 1fr 2.5fr 1fr;
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
 }
 
-/* ============================================================
-   PANELS — GLASS + EMBER BORDERS
-   ============================================================ */
-.helm-panel {
-  position: relative;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  background: var(--panel-bg);
-  backdrop-filter: var(--blur-medium);
-  border-right: var(--border-thin);
-  border-left: var(--border-thin);
-  border-bottom: var(--border-thin);
-  overflow: hidden;
-}
-
-/* Center panel lighter */
-.helm-panel-center {
-  background: var(--panel-bg-light);
-  backdrop-filter: var(--blur-light);
-}
-
-/* Panel inner wrapper */
-.helm-panel-inner {
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-/* ============================================================
-   PANEL HEADERS
-   ============================================================ */
-.helm-panel-header {
-  margin-bottom: 12px;
-}
-
-.panel-title {
-  font-size: 20px;
-  letter-spacing: 0.12em;
-  color: var(--orange-bright);
-  text-shadow: 0 0 6px var(--orange-soft);
-}
-
-/* ============================================================
-   PANEL CONTENT BLOCKS
-   ============================================================ */
-.panel-content {
-  flex: 1;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.panel-block {
-  padding: 12px 14px;
-  background: rgba(255, 255, 255, 0.03);
-  border: var(--border-thin);
-  border-radius: 6px;
-  backdrop-filter: var(--blur-light);
-}
-
-.scroll-block {
-  max-height: 140px;
-  overflow-y: auto;
-}
-
-/* Titles */
-.block-title {
-  font-size: 14px;
-  letter-spacing: 0.14em;
-  margin-bottom: 6px;
-  color: var(--orange-bright);
-}
-
-/* ============================================================
-   SPORTS ITEMS
-   ============================================================ */
-.sports-item,
-.headline-item,
-.highlight-item,
-.favorite-team {
-  padding: 8px 6px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.live-item {
-  background: rgba(255, 122, 26, 0.12);
-  border-left: 3px solid var(--orange-bright);
-}
-
-/* ============================================================
-   CENTER PANEL — TAGLINE + JOURNAL + SEARCH
-   ============================================================ */
-#tagline-wrapper {
+/* HEADER */
+.header {
+  grid-column: 1 / -1;
   text-align: center;
-  margin-bottom: 20px;
+  padding: 20px;
 }
 
-#tagline-text {
-  font-size: 20px;
-  letter-spacing: 0.08em;
-  margin-bottom: 6px;
+.ember-text {
+  font-size: 2.5rem;
+  letter-spacing: .3rem;
+  text-shadow: 0 0 15px rgba(255,120,20,.35);
+  animation: ember 3s infinite ease-in-out;
 }
 
-#tagline-dash {
-  width: 60px;
-  height: 3px;
-  margin: 0 auto;
-  background: var(--orange-bright);
-  border-radius: 2px;
-  animation: dashPulse 3s infinite ease-in-out;
+@keyframes ember {
+  0%,100% { text-shadow: 0 0 12px rgba(255,120,20,.25); }
+  50% { text-shadow: 0 0 20px rgba(255,120,20,.6); }
 }
 
-@keyframes dashPulse {
-  0%, 100% { opacity: 0.8; }
-  50% { opacity: 1; }
+/* PANELS */
+.panel {
+  padding: 15px;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
 }
 
-/* Journal button */
-.ember-button {
-  padding: 10px 18px;
-  background: rgba(255, 122, 26, 0.15);
-  border: 1px solid var(--orange);
-  color: var(--orange-bright);
-  border-radius: 6px;
-  cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  transition: 0.2s ease;
+.left-panel, .right-panel {
+  background: linear-gradient(to bottom, rgba(10,20,40,.35), rgba(0,0,0,.8));
+  backdrop-filter: blur(12px);
 }
 
-.ember-button:hover {
-  background: rgba(255, 122, 26, 0.25);
-  box-shadow: 0 0 12px var(--orange-soft);
-}
-
-/* Search bar */
-#helm-search {
-  width: 100%;
-  padding: 10px;
-  background: rgba(255, 255, 255, 0.06);
-  border: var(--border-thin);
-  border-radius: 6px;
-  color: #fff;
-}
-
-/* ============================================================
-   POSTING COACH
-   ============================================================ */
-#posting-coach .coach-actions {
+.panel-header {
   display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-/* ============================================================
-   RIGHT PANEL — ENVIRONMENT
-   ============================================================ */
-#panel-environment p {
-  font-size: 14px;
-  opacity: 0.9;
-}
-
-/* ============================================================
-   EMBER TOGGLE BUTTONS
-   ============================================================ */
-.ember-toggle {
-  position: absolute;
-  top: 10px;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--orange-soft);
-  border: 1px solid var(--orange);
-  cursor: pointer;
-  animation: emberFlicker 3s infinite ease-in-out;
-}
-
-.ember-left-toggle { right: 10px; }
-.ember-right-toggle { left: 10px; }
-
-/* ============================================================
-   FOOTER — QUOTE BAR
-   ============================================================ */
-#helm-footer {
-  height: 80px;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.35);
-  backdrop-filter: var(--blur-light);
-  border-top: var(--border-heavy);
-  display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  position: relative;
-  z-index: 10;
 }
 
-#footer-quote-wrapper {
+.scrollable {
+  overflow-y: auto;
+  height: calc(100vh - 160px);
+}
+
+/* CENTER */
+.center-panel {
   text-align: center;
+  padding-top: 40px;
 }
 
-#footer-quote-text {
-  font-size: 16px;
-  margin-bottom: 4px;
+.search-area input {
+  width: 60%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: rgba(0,0,0,.4);
+  border: 1px solid var(--border);
+  color: white;
 }
 
-#footer-quote-author {
-  font-size: 14px;
-  opacity: 0.8;
+.subtext {
+  margin-top: 8px;
+  opacity: .7;
 }
 
-#footer-comet-underline {
+.tagline {
+  margin-top: 8px;
+  font-size: .9rem;
+}
+
+.journal-button {
+  margin: 25px auto;
   width: 180px;
-  height: 3px;
-  margin: 8px auto 0;
-  background: linear-gradient(
-    to right,
-    transparent,
-    var(--orange-bright),
-    transparent
-  );
-  animation: cometRun 4s infinite ease-in-out;
+  height: 36px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  position: relative;
 }
 
-@keyframes cometRun {
-  0% { transform: translateX(-40px); opacity: 0.4; }
-  50% { transform: translateX(40px); opacity: 1; }
-  100% { transform: translateX(-40px); opacity: 0.4; }
+.journal-button .dot {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background: var(--ember);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--ember);
+}
+
+/* GLASS */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 15px;
+}
+
+/* BUTTONS */
+.glass-btn {
+  background: var(--glass-bg);
+  border: 1px solid var(--border);
+  color: white;
+  padding: 8px;
+  border-radius: 10px;
+  margin-top: 8px;
+  cursor: pointer;
+}
+
+.glass-btn:active {
+  box-shadow: 0 0 12px var(--ember);
+}
+
+/* FOOTER */
+.footer {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 12px;
+  font-size: .85rem;
+  opacity: .75;
 }
