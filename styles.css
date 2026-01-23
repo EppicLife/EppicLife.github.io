@@ -29,7 +29,30 @@ body {
   display: grid;
   grid-template-columns: 1fr 2.5fr 1fr;
   grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "header header header"
+    "left   center right"
+    "footer footer footer";
   height: 100vh;
+}
+.header {
+  grid-area: header;
+}
+
+.left-panel {
+  grid-area: left;
+}
+
+.center-panel {
+  grid-area: center;
+}
+
+.right-panel {
+  grid-area: right;
+}
+
+.footer {
+  grid-area: footer;
 }
 
 /* HEADER */
