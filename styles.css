@@ -28,13 +28,14 @@ body {
 .page-grid {
   display: grid;
   grid-template-columns: 1fr 2.5fr 1fr;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: 90px 1fr 60px;
   grid-template-areas:
     "header header header"
     "left   center right"
     "footer footer footer";
   height: 100vh;
 }
+
 .header {
   grid-area: header;
 }
