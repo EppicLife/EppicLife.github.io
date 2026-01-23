@@ -79,9 +79,9 @@ body {
 
 /* PANELS */
 .panel {
-  padding: 15px;
-  border-left: 1px solid var(--border);
-  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* critical */
 }
 
 .left-panel, .right-panel {
@@ -93,11 +93,6 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.scrollable {
-  overflow-y: auto;
-  height: calc(100vh - 160px);
 }
 
 /* CENTER */
